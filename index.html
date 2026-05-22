@@ -3,28 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tai Pham — Build Something Real With Me</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <title>Phúc & Tài — Build With Us · The Ant Adventures</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* ─── TOKENS ─────────────────────────────────────────── */
+
+    /* ═══════════════════════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════════════════════ */
     :root {
-      --green:      #2E7D52;
-      --green-dark: #1d5236;
-      --green-light:#e8f5ee;
-      --amber:      #C8963E;
-      --coffee:     #5C3D2E;
-      --ink:        #1a1a2e;
-      --mid:        #4a4a6a;
-      --muted:      #8888a8;
-      --bg:         #fafaf8;
-      --white:      #ffffff;
-      --border:     #e8e8f0;
-      --radius:     16px;
-      --shadow:     0 4px 24px rgba(0,0,0,.08);
-      --shadow-lg:  0 12px 48px rgba(0,0,0,.14);
+      --green:       #2E7D52;
+      --green-dark:  #1d5236;
+      --green-mid:   #3a9460;
+      --green-light: #e8f5ee;
+      --amber:       #C8963E;
+      --amber-light: #fdf3e3;
+      --coffee:      #5C3D2E;
+      --ink:         #1a1a2e;
+      --mid:         #4a4a6a;
+      --muted:       #8888a8;
+      --bg:          #fafaf8;
+      --white:       #ffffff;
+      --border:      #e8e8f0;
+      --radius:      16px;
+      --radius-sm:   10px;
+      --shadow:      0 4px 24px rgba(0,0,0,.07);
+      --shadow-lg:   0 12px 48px rgba(0,0,0,.13);
     }
 
-    /* ─── RESET ──────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -34,855 +42,837 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
 
-    /* ─── LANGUAGE TOGGLE ────────────────────────────────── */
-    .lang-bar {
+    /* ═══════════════════════════════════════════════════════
+       LANGUAGE SYSTEM
+    ═══════════════════════════════════════════════════════ */
+    .vn          { display: none; }
+    span.vn      { display: none; }
+    body.lang-vn .en      { display: none; }
+    body.lang-vn .vn      { display: block; }
+    body.lang-vn span.en  { display: none; }
+    body.lang-vn span.vn  { display: inline; }
+
+    /* ═══════════════════════════════════════════════════════
+       NAV / LANGUAGE BAR
+    ═══════════════════════════════════════════════════════ */
+    .topbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      display: flex; align-items: center; justify-content: flex-end;
-      padding: 12px 32px;
-      background: rgba(250,250,248,.92);
-      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+      background: rgba(250,250,248,.93);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
+    .topbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .85rem; font-weight: 600; color: var(--green);
+      letter-spacing: .02em;
+    }
+    .topbar-brand span { font-size: 1.1rem; }
     .lang-toggle {
       display: flex; gap: 4px;
-      background: var(--border);
-      border-radius: 40px;
-      padding: 4px;
+      background: var(--border); border-radius: 40px; padding: 4px;
     }
     .lang-btn {
       border: none; cursor: pointer;
-      padding: 6px 18px;
-      border-radius: 40px;
-      font-size: .8rem; font-weight: 600;
-      letter-spacing: .04em;
-      transition: all .25s;
-      background: transparent; color: var(--mid);
+      padding: 6px 18px; border-radius: 40px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+      transition: all .22s; background: transparent; color: var(--mid);
     }
     .lang-btn.active {
-      background: var(--green);
-      color: var(--white);
+      background: var(--green); color: var(--white);
       box-shadow: 0 2px 8px rgba(46,125,82,.3);
     }
 
-    /* ─── CONTENT VISIBILITY ─────────────────────────────── */
-    .vn { display: none; }
-    body.lang-vn .en { display: none; }
-    body.lang-vn .vn { display: block; }
-    body.lang-vn span.en { display: none; }
-    body.lang-vn span.vn { display: inline; }
-    span.vn { display: none; }
+    /* ═══════════════════════════════════════════════════════
+       SHARED LAYOUT
+    ═══════════════════════════════════════════════════════ */
+    .container  { max-width: 1080px; margin: 0 auto; }
+    section     { padding: 100px 40px; }
 
-    /* ─── HERO ───────────────────────────────────────────── */
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 18px;
+    }
+    .section-tag::before {
+      content: ''; width: 28px; height: 2px; background: var(--green);
+    }
+    .section-tag.amber { color: var(--amber); }
+    .section-tag.amber::before { background: var(--amber); }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; color: var(--ink); line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    h2 em { font-style: italic; color: var(--green); }
+    h2 em.amber { color: var(--amber); }
+
+    .lead {
+      font-size: 1.08rem; color: var(--mid);
+      max-width: 660px; line-height: 1.9; margin-bottom: 56px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       FADE-IN
+    ═══════════════════════════════════════════════════════ */
+    .fi {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .fi.visible { opacity: 1; transform: none; }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════════ */
     .hero {
       min-height: 100vh;
-      padding: 120px 32px 80px;
+      padding: 140px 40px 100px;
       display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(145deg, #0e2d1e 0%, #1d5236 50%, #2E7D52 100%);
+      background: linear-gradient(150deg, #071a10 0%, #0e2d1e 40%, #1d5236 75%, #2E7D52 100%);
       position: relative; overflow: hidden;
     }
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+    }
+    /* soft radial glow */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -20%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse, rgba(46,125,82,.35) 0%, transparent 70%);
+      pointer-events: none;
     }
     .hero-inner {
-      max-width: 860px; width: 100%;
-      text-align: center;
-      position: relative; z-index: 1;
+      max-width: 820px; width: 100%;
+      text-align: center; position: relative; z-index: 1;
     }
-    .hero-eyebrow {
+
+    /* Eyebrow chip */
+    .hero-chip {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 40px;
-      padding: 6px 20px;
-      font-size: .78rem; font-weight: 600;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 40px; padding: 7px 22px;
+      font-size: .75rem; font-weight: 600;
       letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(255,255,255,.9);
-      margin-bottom: 32px;
+      color: rgba(255,255,255,.88); margin-bottom: 36px;
     }
-    .hero-name {
+
+    /* Main headline */
+    .hero-headline {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.1;
-      margin-bottom: 24px;
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      font-weight: 700; color: var(--white);
+      line-height: 1.1; margin-bottom: 28px;
     }
-    .hero-name em { font-style: italic; color: #a8e0bf; }
+    .hero-headline em { font-style: italic; color: #a8e0bf; }
+
+    /* Sub-text */
     .hero-sub {
-      font-size: clamp(1rem, 2.2vw, 1.25rem);
-      color: rgba(255,255,255,.8);
-      max-width: 640px; margin: 0 auto 48px;
-      font-weight: 300; line-height: 1.8;
+      font-size: clamp(.95rem, 2vw, 1.18rem);
+      color: rgba(255,255,255,.75);
+      max-width: 600px; margin: 0 auto 52px;
+      font-weight: 300; line-height: 1.85;
     }
+
+    /* Founder duo cards */
+    .hero-duo {
+      display: flex; gap: 16px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 52px;
+    }
+    .hero-duo-and {
+      display: flex; align-items: center;
+      color: rgba(255,255,255,.35); font-size: .85rem;
+      font-style: italic;
+    }
+    .hero-founder {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 60px; padding: 10px 24px 10px 10px;
+      backdrop-filter: blur(8px);
+      transition: background .22s, transform .22s;
+      cursor: default;
+    }
+    .hero-founder:hover { background: rgba(255,255,255,.15); transform: translateY(-2px); }
+    .f-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; flex-shrink: 0;
+    }
+    .f-avatar-tai  { background: linear-gradient(135deg,#a8e0bf,#2E7D52); color: #fff; }
+    .f-avatar-phuc { background: linear-gradient(135deg,#f7d58b,#C8963E); color: #2e1a0e; }
+    .f-info { text-align: left; }
+    .f-name  { font-size: .92rem; font-weight: 600; color: #fff; line-height: 1.2; }
+    .f-role  { font-size: .7rem; color: rgba(255,255,255,.6); margin-top: 2px; }
+
+    /* Stats strip */
     .hero-stats {
       display: flex; gap: 0; justify-content: center;
-      margin-bottom: 56px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: var(--radius);
-      overflow: hidden;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: var(--radius); overflow: hidden;
+      margin-bottom: 48px;
     }
-    .stat {
-      flex: 1; padding: 28px 24px;
-      border-right: 1px solid rgba(255,255,255,.12);
+    .h-stat {
+      flex: 1; padding: 26px 20px;
+      border-right: 1px solid rgba(255,255,255,.1);
     }
-    .stat:last-child { border-right: none; }
-    .stat-num {
+    .h-stat:last-child { border-right: none; }
+    .h-stat-num {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem; font-weight: 700;
-      color: #a8e0bf; display: block;
-      line-height: 1;
+      font-size: 2rem; font-weight: 700; color: #a8e0bf;
+      display: block; line-height: 1;
     }
-    .stat-label {
-      font-size: .75rem; color: rgba(255,255,255,.65);
+    .h-stat-lbl {
+      font-size: .7rem; color: rgba(255,255,255,.6);
       margin-top: 6px; text-transform: uppercase; letter-spacing: .08em;
     }
-    .hero-cta {
-      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-    }
+
+    /* CTA buttons */
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 16px 36px; border-radius: 40px;
-      font-size: .95rem; font-weight: 600;
-      text-decoration: none; transition: all .25s;
+      padding: 15px 34px; border-radius: 40px;
+      font-size: .92rem; font-weight: 600;
+      text-decoration: none; transition: all .22s;
       cursor: pointer; border: none;
     }
-    .btn-primary {
-      background: var(--white); color: var(--green);
-      box-shadow: 0 4px 20px rgba(0,0,0,.2);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.3); }
-    .btn-outline {
-      background: transparent; color: var(--white);
-      border: 2px solid rgba(255,255,255,.5);
-    }
-    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
+    .btn-white  { background: var(--white); color: var(--green); box-shadow: 0 4px 20px rgba(0,0,0,.2); }
+    .btn-white:hover  { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.3); }
+    .btn-ghost  { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,.45); }
+    .btn-ghost:hover  { border-color: var(--white); background: rgba(255,255,255,.08); }
+    .btn-green  { background: var(--green); color: var(--white); box-shadow: 0 4px 20px rgba(46,125,82,.35); }
+    .btn-green:hover  { background: var(--green-dark); transform: translateY(-2px); }
+    .btn-amber  { background: var(--amber); color: var(--white); box-shadow: 0 4px 20px rgba(200,150,62,.35); }
+    .btn-amber:hover  { background: #b07a2e; transform: translateY(-2px); }
+
+    /* Scroll indicator */
     .hero-scroll {
       position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 8px;
-      color: rgba(255,255,255,.5); font-size: .75rem; letter-spacing: .1em;
+      color: rgba(255,255,255,.4); font-size: .7rem; letter-spacing: .1em;
     }
     .hero-scroll-line {
-      width: 1px; height: 48px;
+      width: 1px; height: 44px;
       background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+      animation: pulse 2.2s ease-in-out infinite;
     }
-    @keyframes scrollPulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+    @keyframes pulse { 0%,100% { opacity:.4; } 50% { opacity:1; } }
 
-    /* ─── SECTIONS ───────────────────────────────────────── */
-    section { padding: 96px 32px; }
-    .container { max-width: 1060px; margin: 0 auto; }
-    .section-label {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: .72rem; font-weight: 700;
-      letter-spacing: .15em; text-transform: uppercase;
-      color: var(--green); margin-bottom: 20px;
-    }
-    .section-label::before {
-      content: ''; display: block;
-      width: 32px; height: 2px; background: var(--green);
-    }
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700; color: var(--ink);
-      line-height: 1.2; margin-bottom: 24px;
-    }
-    h2 em { font-style: italic; color: var(--green); }
-    .lead {
-      font-size: 1.1rem; color: var(--mid);
-      max-width: 680px; line-height: 1.85;
-      margin-bottom: 56px;
-    }
+    /* ═══════════════════════════════════════════════════════
+       FOUNDERS SECTION
+    ═══════════════════════════════════════════════════════ */
+    .founders-section { background: var(--white); }
 
-    /* ─── STORY ──────────────────────────────────────────── */
-    .story-section { background: var(--white); }
-    .story-grid {
+    .founders-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
-    }
-    .story-visual {
-      position: relative;
-    }
-    .story-card-main {
-      background: linear-gradient(135deg, var(--green-dark), var(--green));
-      border-radius: 24px;
-      padding: 48px 40px;
-      color: var(--white);
-      position: relative; overflow: hidden;
-    }
-    .story-card-main::after {
-      content: '"';
-      position: absolute; bottom: -20px; right: 20px;
-      font-family: 'Playfair Display', serif;
-      font-size: 160px; color: rgba(255,255,255,.08);
-      line-height: 1;
-    }
-    .story-card-main blockquote {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem; font-style: italic;
-      line-height: 1.7; margin-bottom: 28px;
-      position: relative; z-index: 1;
-    }
-    .story-card-main cite {
-      font-style: normal; font-size: .85rem;
-      opacity: .75; font-weight: 500;
-    }
-    .story-badge {
-      position: absolute; top: -20px; right: -20px;
-      background: var(--amber);
-      width: 100px; height: 100px; border-radius: 50%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      box-shadow: var(--shadow);
-      color: var(--white); text-align: center;
-    }
-    .story-badge strong { font-size: 1.8rem; font-weight: 700; line-height: 1; }
-    .story-badge span { font-size: .6rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-    .story-content h2 { margin-bottom: 20px; }
-    .story-content p { color: var(--mid); margin-bottom: 20px; font-size: 1.02rem; line-height: 1.85; }
-    .story-tags {
-      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
-    }
-    .tag {
-      background: var(--green-light); color: var(--green-dark);
-      border-radius: 40px; padding: 6px 16px;
-      font-size: .8rem; font-weight: 600;
+      gap: 48px; align-items: start;
     }
 
-    /* ─── VENTURES ───────────────────────────────────────── */
+    /* divider between two founder cards */
+    .founders-divider {
+      display: none; /* shown via grid — hidden on mobile */
+    }
+
+    .founder-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 24px; padding: 40px;
+      position: relative; overflow: hidden;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .founder-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+
+    /* Accent bar top */
+    .founder-card.card-tai::before  { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, var(--green-dark), var(--green-mid)); }
+    .founder-card.card-phuc::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #a06820, var(--amber)); }
+
+    .founder-card-header {
+      display: flex; align-items: center; gap: 18px;
+      margin-bottom: 28px;
+    }
+    .fc-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; flex-shrink: 0;
+    }
+    .fc-avatar-tai  { background: linear-gradient(135deg,#a8e0bf,#2E7D52); color: #fff; }
+    .fc-avatar-phuc { background: linear-gradient(135deg,#f7d58b,#C8963E); color: #2e1a0e; }
+    .fc-id { flex: 1; }
+    .fc-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; color: var(--ink); line-height: 1.2;
+    }
+    .fc-title { font-size: .78rem; color: var(--muted); margin-top: 4px; }
+
+    /* Story paragraph */
+    .fc-story {
+      font-size: .97rem; color: var(--mid); line-height: 1.85;
+      margin-bottom: 28px;
+    }
+
+    /* Milestone pills */
+    .fc-milestones {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 28px;
+    }
+    .milestone {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .75rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 40px;
+    }
+    .milestone-green { background: var(--green-light); color: var(--green); }
+    .milestone-amber { background: var(--amber-light); color: #7a5010; }
+
+    /* Quote */
+    .fc-quote {
+      border-left: 3px solid var(--border);
+      padding-left: 18px;
+      font-style: italic; font-size: .92rem; color: var(--mid);
+      line-height: 1.7;
+    }
+    .fc-quote.q-green { border-color: var(--green); }
+    .fc-quote.q-amber { border-color: var(--amber); }
+
+    /* ═══════════════════════════════════════════════════════
+       VENTURES SECTION
+    ═══════════════════════════════════════════════════════ */
     .ventures-section { background: var(--bg); }
+
     .ventures-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 28px;
     }
-    .venture-card {
+
+    .vc {
       background: var(--white);
-      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      transition: all .3s;
       display: flex; flex-direction: column;
+      transition: box-shadow .25s, transform .25s;
     }
-    .venture-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-      border-color: transparent;
+    .vc:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+
+    .vc-head {
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid var(--border);
     }
-    .venture-header {
-      padding: 36px 32px 28px;
-      position: relative;
+    .vc-icon { font-size: 2rem; margin-bottom: 12px; }
+    .vc-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--ink); margin-bottom:4px; }
+    .vc-type { font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+    .vc-stage {
+      display: inline-block; margin-top:10px;
+      font-size:.68rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+      padding:4px 12px; border-radius:40px;
     }
-    .venture-card:nth-child(1) .venture-header { background: linear-gradient(135deg, #1d5236, #2E7D52); }
-    .venture-card:nth-child(2) .venture-header { background: linear-gradient(135deg, #1a3a5c, #2d6a9f); }
-    .venture-card:nth-child(3) .venture-header { background: linear-gradient(135deg, #3d2010, #7a4525); }
-    .venture-icon { font-size: 2.5rem; margin-bottom: 16px; display: block; }
-    .venture-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem; font-weight: 700;
-      color: var(--white); line-height: 1.2;
-      margin-bottom: 6px;
+    .stage-green { background:var(--green-light); color:var(--green); }
+    .stage-amber { background:var(--amber-light); color:#7a5010; }
+    .stage-coffee { background:#f0e8e3; color:var(--coffee); }
+
+    .vc-body { padding:20px 28px 28px; flex:1; display:flex; flex-direction:column; gap:14px; }
+    .vc-desc { font-size:.9rem; color:var(--mid); line-height:1.8; }
+
+    .vc-vision-box {
+      background: var(--green-light); border-radius:10px;
+      padding:12px 16px;
     }
-    .venture-type {
-      font-size: .75rem; font-weight: 600;
-      color: rgba(255,255,255,.7);
-      text-transform: uppercase; letter-spacing: .08em;
+    .vc-vision-box.amber-box { background: var(--amber-light); }
+    .vc-vision-box.coffee-box { background: #f5ede8; }
+    .vc-vision-label { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--green); margin-bottom:4px; }
+    .vc-vision-box.amber-box .vc-vision-label { color:#7a5010; }
+    .vc-vision-box.coffee-box .vc-vision-label { color:var(--coffee); }
+    .vc-vision-text { font-size:.85rem; font-weight:600; color:var(--ink); }
+
+    /* coffee items inside Thở card */
+    .tho-coffees {
+      display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;
     }
-    .venture-stage {
-      position: absolute; top: 24px; right: 24px;
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 20px; padding: 4px 12px;
-      font-size: .7rem; font-weight: 600;
-      color: rgba(255,255,255,.9);
+    .tho-item {
+      background:#f5ede8; border-radius:8px; padding:8px 6px;
+      text-align:center; display:flex; flex-direction:column; gap:2px;
     }
-    .venture-body { padding: 28px 32px; flex: 1; display: flex; flex-direction: column; }
-    .venture-desc {
-      font-size: .95rem; color: var(--mid);
-      line-height: 1.75; margin-bottom: 24px; flex: 1;
+    .tho-item span { font-size:1rem; }
+    .tho-item strong { font-size:.68rem; color:var(--coffee); line-height:1.2; }
+    .tho-item small  { font-size:.6rem; color:var(--muted); }
+
+    .tho-workshop {
+      background:#2e1a0e; border-radius:10px; padding:12px 14px;
     }
-    .venture-vision {
-      background: var(--green-light);
-      border-radius: 10px; padding: 14px 18px;
-      margin-bottom: 24px;
+    .tho-ws-lbl {
+      font-size:.65rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.1em; color:#C8963E; margin-bottom:8px;
     }
-    .venture-card:nth-child(2) .venture-vision { background: #e8f0f8; }
-    .venture-card:nth-child(3) .venture-vision { background: #f5ede8; }
-    .venture-vision-label {
-      font-size: .7rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .1em;
-      color: var(--green); margin-bottom: 4px;
-    }
-    .venture-card:nth-child(2) .venture-vision-label { color: #2d6a9f; }
-    .venture-card:nth-child(3) .venture-vision-label { color: var(--coffee); }
-    .venture-vision-text {
-      font-size: .88rem; color: var(--ink); font-weight: 500;
-    }
-    .venture-roles { margin-top: auto; }
-    .venture-roles-label {
-      font-size: .72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .1em;
-      color: var(--muted); margin-bottom: 10px;
-    }
-    .role-pill {
-      display: inline-block;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px; padding: 5px 12px;
-      font-size: .78rem; font-weight: 500;
-      color: var(--ink); margin: 3px 4px 3px 0;
+    .tho-ws-item {
+      display:flex; align-items:center; gap:8px;
+      font-size:.78rem; color:rgba(255,255,255,.82); margin-bottom:4px;
     }
 
-    /* ─── PHILOSOPHY ─────────────────────────────────────── */
-    .philosophy-section {
-      background: linear-gradient(145deg, #0e2d1e 0%, #1d5236 100%);
-      color: var(--white);
-    }
-    .philosophy-section .section-label { color: #a8e0bf; }
-    .philosophy-section .section-label::before { background: #a8e0bf; }
-    .philosophy-section h2 { color: var(--white); }
-    .philosophy-section h2 em { color: #a8e0bf; }
-    .philosophy-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
-    }
-    .philosophy-quote {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
-      font-style: italic;
-      line-height: 1.6;
-      color: var(--white);
-      border-left: 4px solid #a8e0bf;
-      padding-left: 32px;
-      margin-bottom: 32px;
-    }
-    .philosophy-author {
-      font-size: .85rem; color: rgba(255,255,255,.6);
-      font-weight: 500;
-    }
-    .principles {
-      display: flex; flex-direction: column; gap: 20px;
-    }
-    .principle {
-      display: flex; gap: 20px; align-items: flex-start;
-    }
-    .principle-icon {
-      width: 48px; height: 48px; flex-shrink: 0;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-    }
-    .principle-text strong {
-      display: block;
-      color: var(--white); font-size: .95rem;
-      margin-bottom: 4px;
-    }
-    .principle-text span {
-      color: rgba(255,255,255,.6); font-size: .87rem;
-    }
+    /* ═══════════════════════════════════════════════════════
+       WHAT WE BELIEVE (values)
+    ═══════════════════════════════════════════════════════ */
+    .values-section { background: var(--white); }
 
-    /* ─── FIT SECTION ────────────────────────────────────── */
-    .fit-section { background: var(--white); }
+    .values-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-bottom: 64px;
+    }
+    .value-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+    }
+    .value-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .value-title {
+      font-family:'Playfair Display',serif;
+      font-size:1rem; font-weight:700; color:var(--ink);
+      margin-bottom:8px;
+    }
+    .value-desc { font-size:.85rem; color:var(--mid); line-height:1.75; }
+
+    /* ═══════════════════════════════════════════════════════
+       FIT — WHO BELONGS
+    ═══════════════════════════════════════════════════════ */
+    .fit-section { background: var(--bg); }
+
     .fit-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
     }
-    .fit-card {
-      border-radius: var(--radius);
-      padding: 40px;
-      border: 1px solid var(--border);
-    }
-    .fit-card.yes {
-      background: var(--green-light);
-      border-color: #b8e0c8;
-    }
-    .fit-card.no {
-      background: #fef5f5;
-      border-color: #f5c6c6;
-    }
-    .fit-title {
+    .fit-col { }
+    .fit-col-head {
       display: flex; align-items: center; gap: 12px;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 700;
-      margin-bottom: 28px;
+      margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
     }
-    .fit-icon {
-      width: 44px; height: 44px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-    }
-    .fit-card.yes .fit-icon { background: var(--green); }
-    .fit-card.no .fit-icon { background: #d94f4f; }
-    .fit-card.yes .fit-title { color: var(--green-dark); }
-    .fit-card.no .fit-title { color: #8b2020; }
+    .fit-col-head.yes-head { border-color: var(--green); }
+    .fit-col-head.no-head  { border-color: #e0e0e8; }
+    .fit-icon { font-size: 1.4rem; }
+    .fit-col-title { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--ink); }
+
+    .fit-items { display:flex; flex-direction:column; gap:14px; }
     .fit-item {
-      display: flex; gap: 14px; align-items: flex-start;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(0,0,0,.06);
+      display:flex; align-items:flex-start; gap:12px;
+      font-size:.9rem; color:var(--mid); line-height:1.65;
     }
-    .fit-item:last-child { border-bottom: none; padding-bottom: 0; }
     .fit-dot {
-      width: 22px; height: 22px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 1px;
-      font-size: .75rem; font-weight: 700;
+      width:20px; height:20px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.7rem; font-weight:700; flex-shrink:0; margin-top:2px;
     }
-    .fit-card.yes .fit-dot { background: var(--green); color: white; }
-    .fit-card.no .fit-dot { background: #d94f4f; color: white; }
-    .fit-item-text strong {
-      display: block; font-size: .92rem; color: var(--ink);
-      margin-bottom: 2px;
-    }
-    .fit-item-text span { font-size: .84rem; color: var(--mid); }
+    .fit-dot.yes { background:var(--green-light); color:var(--green); }
+    .fit-dot.no  { background:#f0f0f5; color:var(--muted); }
 
-    /* ─── ROLES SECTION ──────────────────────────────────── */
-    .roles-section { background: var(--bg); }
-    .roles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-bottom: 56px;
-    }
-    .role-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 32px;
-      border: 1px solid var(--border);
-      transition: all .25s;
-    }
-    .role-card:hover { box-shadow: var(--shadow); border-color: var(--green); }
-    .role-venture-tag {
-      display: inline-block;
-      border-radius: 20px; padding: 4px 12px;
-      font-size: .7rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .08em;
-      margin-bottom: 16px;
-    }
-    .role-venture-tag.ant { background: var(--green-light); color: var(--green-dark); }
-    .role-venture-tag.crm { background: #e8f0f8; color: #1a3a5c; }
-    .role-venture-tag.cafe { background: #f5ede8; color: var(--coffee); }
-    .role-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem; font-weight: 700;
-      color: var(--ink); margin-bottom: 12px;
-    }
-    .role-desc { font-size: .88rem; color: var(--mid); line-height: 1.7; }
-
-    /* ─── CTA SECTION ────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════
+       CTA — JOIN THE JOURNEY
+    ═══════════════════════════════════════════════════════ */
     .cta-section {
-      background: var(--ink);
-      text-align: center;
-      padding: 120px 32px;
+      background: linear-gradient(150deg, #071a10 0%, #0e2d1e 50%, #1d5236 100%);
+      padding: 120px 40px;
+      text-align: center; position: relative; overflow: hidden;
     }
-    .cta-section .section-label { color: #a8e0bf; justify-content: center; }
-    .cta-section .section-label::before { background: #a8e0bf; }
-    .cta-section h2 { color: var(--white); }
-    .cta-section h2 em { color: #a8e0bf; }
-    .cta-desc {
-      font-size: 1.1rem; color: rgba(255,255,255,.65);
-      max-width: 560px; margin: 0 auto 48px;
-      line-height: 1.8;
+    .cta-section::before {
+      content:''; position:absolute; inset:0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E") repeat;
     }
-    .cta-email-block {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: var(--radius); padding: 20px 32px;
-      margin-bottom: 48px;
+    .cta-inner { max-width:680px; margin:0 auto; position:relative; z-index:1; }
+    .cta-label {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+      border-radius:40px; padding:6px 20px;
+      font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+      color:rgba(255,255,255,.8); margin-bottom:28px;
     }
-    .cta-email-label { font-size: .75rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; }
-    .cta-email-addr { font-size: 1.1rem; color: var(--white); font-weight: 600; }
-    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn-cta-primary {
-      background: var(--green); color: var(--white);
-      box-shadow: 0 4px 24px rgba(46,125,82,.4);
+    .cta-h {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,5vw,3.4rem); font-weight:700;
+      color:var(--white); line-height:1.2; margin-bottom:22px;
     }
-    .btn-cta-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
-    .btn-cta-outline {
-      background: transparent; color: rgba(255,255,255,.85);
-      border: 2px solid rgba(255,255,255,.25);
+    .cta-h em { font-style:italic; color:#a8e0bf; }
+    .cta-sub {
+      font-size:1rem; color:rgba(255,255,255,.7);
+      line-height:1.85; margin-bottom:44px;
     }
-    .btn-cta-outline:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.04); }
+    .cta-duo {
+      display:flex; gap:14px; justify-content:center;
+      flex-wrap:wrap; margin-bottom:40px;
+    }
+    .cta-email-note {
+      font-size:.82rem; color:rgba(255,255,255,.45);
+      line-height:1.7;
+    }
+    .cta-email-note a { color:rgba(255,255,255,.65); text-decoration:underline; }
 
-    /* ─── FOOTER ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════ */
     footer {
-      background: #0a1a10;
-      padding: 40px 32px;
-      text-align: center;
-      color: rgba(255,255,255,.35);
-      font-size: .8rem;
+      background:#060e08; padding:32px 40px;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:16px;
     }
-    footer a { color: rgba(255,255,255,.5); text-decoration: none; }
-    footer a:hover { color: var(--white); }
+    .footer-brand {
+      display:flex; align-items:center; gap:8px;
+      font-size:.82rem; color:rgba(255,255,255,.5);
+    }
+    .footer-links {
+      display:flex; gap:28px;
+      font-size:.78rem; color:rgba(255,255,255,.4);
+    }
+    .footer-links a { transition:color .2s; }
+    .footer-links a:hover { color:rgba(255,255,255,.8); }
 
-    /* ─── FADE-IN ANIMATION ──────────────────────────────── */
-    .fade-in {
-      opacity: 0; transform: translateY(32px);
-      transition: opacity .7s ease, transform .7s ease;
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .ventures-grid { grid-template-columns: 1fr; }
+      .founders-grid { grid-template-columns: 1fr; }
+      .values-grid   { grid-template-columns: 1fr 1fr; }
+      .fit-grid      { grid-template-columns: 1fr; }
+      .hero-stats    { flex-direction:column; }
+      .h-stat        { border-right:none; border-bottom:1px solid rgba(255,255,255,.1); }
+      .h-stat:last-child { border-bottom:none; }
     }
-    .fade-in.visible { opacity: 1; transform: none; }
+    @media (max-width: 640px) {
+      section, .cta-section { padding: 72px 24px; }
+      .hero { padding: 110px 24px 88px; }
+      .topbar { padding: 14px 24px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .hero-duo { flex-direction:column; align-items:center; }
+      .hero-duo-and { transform:rotate(90deg); }
+    }
 
-    /* ─── THỞ COFFEE MENU ────────────────────────────────── */
-    .venture-tho-coffees {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px; margin-bottom: 14px;
-    }
-    .tho-coffee {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 3px; text-align: center;
-      background: #f5ede8; border-radius: 8px; padding: 8px 6px;
-    }
-    .tho-coffee span { font-size: 1.1rem; }
-    .tho-coffee strong { font-size: .72rem; color: var(--coffee); line-height: 1.2; }
-    .tho-coffee small { font-size: .65rem; color: var(--muted); }
-
-    /* ─── THỞ WORKSHOPS ──────────────────────────────────── */
-    .tho-workshops {
-      background: #2e1a0e;
-      border-radius: 10px; padding: 14px 16px;
-      margin-bottom: 14px;
-    }
-    .tho-workshop-label {
-      font-size: .68rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .1em;
-      color: #c8963e; margin-bottom: 10px;
-    }
-    .tho-workshop-items {
-      display: flex; flex-direction: column; gap: 6px;
-    }
-    .tho-workshop-item {
-      display: flex; align-items: center; gap: 8px;
-      font-size: .78rem; color: rgba(255,255,255,.85);
-    }
-    .tho-workshop-item span { font-size: .9rem; flex-shrink: 0; }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .story-grid,
-      .philosophy-grid,
-      .fit-grid { grid-template-columns: 1fr; gap: 48px; }
-      .ventures-grid,
-      .roles-grid { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: column; }
-      .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
-      .stat:last-child { border-bottom: none; }
-    }
-    @media (max-width: 600px) {
-      section { padding: 64px 20px; }
-      .hero { padding: 100px 20px 72px; }
-      .lang-bar { padding: 12px 20px; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- ── LANGUAGE BAR ───────────────────────────────────── -->
-  <div class="lang-bar">
+  <!-- ══ TOP BAR ══════════════════════════════════════════ -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <span>🐜</span>
+      <span class="en">The Ant Adventures · Vietnam</span>
+      <span class="vn">The Ant Adventures · Việt Nam</span>
+    </div>
     <div class="lang-toggle">
       <button class="lang-btn active" id="btnEN" onclick="setLang('en')">🇬🇧 EN</button>
-      <button class="lang-btn" id="btnVN" onclick="setLang('vn')">🇻🇳 VN</button>
+      <button class="lang-btn"        id="btnVN" onclick="setLang('vn')">🇻🇳 VN</button>
     </div>
   </div>
 
-  <!-- ── HERO ──────────────────────────────────────────── -->
-  <section class="hero">
+  <!-- ══ HERO ════════════════════════════════════════════ -->
+  <section class="hero" id="top">
     <div class="hero-inner">
-      <div class="hero-eyebrow">
+
+      <div class="hero-chip">
         <span>🐜</span>
-        <span class="en">Vietnam · Tourism · Startup Builder</span>
-        <span class="vn">Việt Nam · Du Lịch · Người Xây Dựng Startup</span>
+        <span class="en">Vietnam · Tourism · 3 Ventures · 2 Founders</span>
+        <span class="vn">Việt Nam · Du lịch · 3 Dự án · 2 Nhà sáng lập</span>
       </div>
 
-      <h1 class="hero-name">
-        <span class="en">Build <em>something real</em><br/>with me.</span>
-        <span class="vn">Hãy cùng tôi<br/><em>xây điều có giá trị</em>.</span>
+      <h1 class="hero-headline">
+        <span class="en">Build <em>something real</em><br>with us.</span>
+        <span class="vn">Hãy cùng chúng tôi<br><em>xây điều có giá trị</em>.</span>
       </h1>
 
       <p class="hero-sub en">
-        I'm Tai Pham — grew up in a poor rural village, put myself through university, worked my way from a Mekong river cruise to Director of luxury tourism. In a world of instability and AI disruption, I chose to build. Now I'm looking for people who want to build with me — not passengers.
+        Two founders from small Mekong Delta towns. Thirty years of combined experience in Vietnam tourism. Three ventures in motion — travel, software, and coffee. We don't want employees. We want builders.
       </p>
       <p class="hero-sub vn">
-        Tôi là Phạm Văn Tài — lớn lên ở vùng quê nghèo, tự vượt qua đại học, làm việc từ du thuyền Mekong đến Giám đốc du lịch luxury. Trong thế giới bất ổn và AI thay đổi tất cả, tôi chọn xây dựng. Tôi đang tìm người muốn xây cùng tôi — không phải hành khách.
+        Hai nhà sáng lập từ những thị trấn nhỏ ven sông Mekong. Ba mươi năm kinh nghiệm ngành du lịch Việt Nam. Ba ventures đang vận hành — du lịch, phần mềm và cà phê. Chúng tôi không tìm nhân viên. Chúng tôi tìm người cùng xây.
       </p>
 
-      <div class="hero-stats">
-        <div class="stat">
-          <span class="stat-num">15</span>
-          <div class="stat-label en">Years in Tourism</div>
-          <div class="stat-label vn">Năm trong ngành du lịch</div>
+      <!-- Duo intro -->
+      <div class="hero-duo">
+        <div class="hero-founder">
+          <div class="f-avatar f-avatar-tai">TP</div>
+          <div class="f-info">
+            <div class="f-name">Phạm Tấn Tài</div>
+            <div class="f-role en">Co-founder · Sales & Systems · Long Xuyên</div>
+            <div class="f-role vn">Đồng sáng lập · Sales & Hệ thống · Long Xuyên</div>
+          </div>
         </div>
-        <div class="stat">
-          <span class="stat-num">3</span>
-          <div class="stat-label en">Active Ventures</div>
-          <div class="stat-label vn">Dự án đang xây dựng</div>
-        </div>
-        <div class="stat">
-          <span class="stat-num">$10M</span>
-          <div class="stat-label en">10-Year Vision</div>
-          <div class="stat-label vn">Tầm nhìn 10 năm</div>
-        </div>
-        <div class="stat">
-          <span class="stat-num">50</span>
-          <div class="stat-label en">Future Team</div>
-          <div class="stat-label vn">Đội ngũ tương lai</div>
+        <div class="hero-duo-and">&amp;</div>
+        <div class="hero-founder">
+          <div class="f-avatar f-avatar-phuc">PV</div>
+          <div class="f-info">
+            <div class="f-name">Võ Hoàng Phúc</div>
+            <div class="f-role en">Co-founder · Brand & Culture · Saigon</div>
+            <div class="f-role vn">Đồng sáng lập · Thương hiệu & Văn hóa · Sài Gòn</div>
+          </div>
         </div>
       </div>
 
-      <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary">
-          <span class="en">✉ Start a Conversation</span>
-          <span class="vn">✉ Hãy nói chuyện với tôi</span>
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="h-stat">
+          <span class="h-stat-num">30</span>
+          <div class="h-stat-lbl en">Combined years tourism</div>
+          <div class="h-stat-lbl vn">Năm kinh nghiệm du lịch</div>
+        </div>
+        <div class="h-stat">
+          <span class="h-stat-num">3</span>
+          <div class="h-stat-lbl en">Active ventures</div>
+          <div class="h-stat-lbl vn">Dự án đang xây</div>
+        </div>
+        <div class="h-stat">
+          <span class="h-stat-num">$10M</span>
+          <div class="h-stat-lbl en">10-year vision</div>
+          <div class="h-stat-lbl vn">Tầm nhìn 10 năm</div>
+        </div>
+        <div class="h-stat">
+          <span class="h-stat-num">50</span>
+          <div class="h-stat-lbl en">Future team size</div>
+          <div class="h-stat-lbl vn">Quy mô đội ngũ tương lai</div>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#founders" class="btn btn-white">
+          <span class="en">Meet the Founders ↓</span>
+          <span class="vn">Gặp gỡ hai nhà sáng lập ↓</span>
         </a>
-        <a href="#ventures" class="btn btn-outline">
-          <span class="en">Explore the Ventures ↓</span>
-          <span class="vn">Khám phá các ventures ↓</span>
+        <a href="#contact" class="btn btn-ghost">
+          <span class="en">✉ Get in touch</span>
+          <span class="vn">✉ Liên hệ ngay</span>
         </a>
       </div>
+
     </div>
     <div class="hero-scroll">
       <div class="hero-scroll-line"></div>
     </div>
   </section>
 
-  <!-- ── STORY ──────────────────────────────────────────── -->
-  <section class="story-section">
+  <!-- ══ FOUNDERS ════════════════════════════════════════ -->
+  <section class="founders-section" id="founders">
     <div class="container">
-      <div class="story-grid">
 
-        <div class="story-visual fade-in">
-          <div class="story-card-main">
-            <div class="story-badge">
-              <strong>15</strong>
-              <span class="en">Years</span>
-              <span class="vn">Năm</span>
+      <div class="section-tag fi en">Meet the Founders</div>
+      <div class="section-tag fi vn">Hai Nhà Sáng Lập</div>
+      <h2 class="fi en">Two stories. <em>One direction.</em></h2>
+      <h2 class="fi vn">Hai câu chuyện. <em>Một hướng đi.</em></h2>
+      <p class="lead fi en">
+        We both grew up far from the spotlight — small towns, limited resources, big dreams. Our paths were different, but they led to the same belief: that business should genuinely serve people.
+      </p>
+      <p class="lead fi vn">
+        Chúng tôi đều lớn lên ở những nơi xa trung tâm — thị trấn nhỏ, nguồn lực hạn chế, nhưng ước mơ thì không nhỏ. Hành trình mỗi người khác nhau, nhưng đều dẫn đến cùng một niềm tin: kinh doanh phải thực sự phục vụ con người.
+      </p>
+
+      <div class="founders-grid">
+
+        <!-- ─ Phúc Võ ─────────────────────────────── -->
+        <div class="founder-card card-phuc fi">
+          <div class="founder-card-header">
+            <div class="fc-avatar fc-avatar-phuc">PV</div>
+            <div class="fc-id">
+              <div class="fc-name">Võ Hoàng Phúc</div>
+              <div class="fc-title en">Co-founder · CEO · Brand &amp; Culture · Ho Chi Minh City</div>
+              <div class="fc-title vn">Đồng sáng lập · CEO · Thương hiệu &amp; Văn hóa · Hồ Chí Minh</div>
             </div>
-            <blockquote class="en">
-              "Small step by step will lead to success. Stay calm, solve the problem first. Show the team — and they will lead themselves."
-            </blockquote>
-            <blockquote class="vn">
-              "Từng bước nhỏ sẽ dẫn đến thành công. Bình tĩnh, giải quyết vấn đề trước. Làm gương cho đội nhóm — và họ sẽ tự dẫn dắt chính mình."
-            </blockquote>
-            <cite>— Tai Pham, Founder</cite>
           </div>
+
+          <p class="fc-story en">
+            Phúc grew up in Trà Vinh — a quiet Mekong province — before spending 15 years as an inbound tour guide, exploring Vietnam from north to south and travelling to over 20 countries to understand what world-class hospitality truly looks like. At TNK Travel, he built and led a team of 100 tour guides. Before The Ant Adventures, he launched two community startups: Saigon Morning Ride and Satori Travel, a Facebook community of 6,000+ members. He brings deep cultural knowledge, a gift for storytelling, and an unmatched ability to turn a traveller into a lifelong fan.
+          </p>
+          <p class="fc-story vn">
+            Phúc lớn lên ở Trà Vinh — một tỉnh nhỏ ven sông Mekong — trước khi dành 15 năm làm hướng dẫn viên inbound, đi khắp Việt Nam từ Bắc vào Nam và đặt chân đến hơn 20 quốc gia để hiểu rõ tiêu chuẩn luxury toàn cầu. Tại TNK Travel, anh xây dựng và dẫn dắt đội ngũ 100 HDV. Trước The Ant Adventures, anh sáng lập hai cộng đồng: Saigon Morning Ride và Satori Travel — cộng đồng Facebook 6.000+ thành viên. Phúc mang đến chiều sâu văn hóa, tài kể chuyện và khả năng chuyển hóa khách hàng thành người hâm mộ trọn đời.
+          </p>
+
+          <div class="fc-milestones">
+            <span class="milestone milestone-amber">🌏 <span class="en">20+ countries</span><span class="vn">20+ quốc gia</span></span>
+            <span class="milestone milestone-amber">👥 <span class="en">100-guide team @ TNK</span><span class="vn">Đội 100 HDV @ TNK</span></span>
+            <span class="milestone milestone-amber">🚀 <span class="en">2 startups before this</span><span class="vn">2 startup trước đây</span></span>
+          </div>
+
+          <blockquote class="fc-quote q-amber en">
+            "Chúng tôi không bán tour. Chúng tôi mang lại một trải nghiệm thực thụ mà khách hàng sẽ kể lại mãi. Giá trị cốt lõi không phải là doanh thu — mà là giá trị chúng tôi tạo ra cho từng con người."
+          </blockquote>
+          <blockquote class="fc-quote q-amber vn">
+            "Chúng tôi không bán tour. Chúng tôi mang lại một trải nghiệm thực thụ mà khách hàng sẽ kể lại mãi. Giá trị cốt lõi không phải là doanh thu — mà là giá trị chúng tôi tạo ra cho từng con người."
+          </blockquote>
         </div>
 
-        <div class="story-content fade-in">
-          <div class="section-label en">My Story</div>
-          <div class="section-label vn">Câu Chuyện Của Tôi</div>
-          <h2 class="en">From a poor village to <em>building ecosystems</em></h2>
-          <h2 class="vn">Từ vùng quê nghèo đến <em>người xây hệ sinh thái</em></h2>
-          <p class="en">
-            I grew up in a poor rural area of Vietnam. When it came to university, I chose to study English teaching — not because it was my dream, but because it was practical. It saved money. It opened a door.
-          </p>
-          <p class="vn">
-            Tôi sinh ra và lớn lên ở vùng quê nghèo. Khi vào đại học, tôi chọn ngành sư phạm tiếng Anh — không phải vì đó là ước mơ, mà vì thực tế. Để tiết kiệm tiền. Để mở ra một cánh cửa.
-          </p>
-          <p class="en">
-            After graduating, I found my way onto the <strong>Mekong Eyes</strong> — a luxury cruise on the river I grew up beside. That was the beginning. From there, I made my way to Saigon, and spent years working my way through Vietnam's tourism industry — from guide to manager to Director.
-          </p>
-          <p class="vn">
-            Ra trường, tôi tìm được việc trên <strong>du thuyền Mekong Eyes</strong> — con sông tôi lớn lên bên cạnh, nay trở thành nơi tôi bắt đầu sự nghiệp. Từ đó, tôi lên Sài Gòn lập nghiệp, và nhiều năm bôn ba trong ngành du lịch — từ hướng dẫn viên đến quản lý đến Giám đốc.
-          </p>
-          <p class="en">
-            After years of watching the world grow more unstable — inflation, wars, post-COVID disruption, AI reshaping everything — I realized something: <strong>in chaos, there are gaps. And gaps are where builders belong.</strong> The time had come to build something of my own.
-          </p>
-          <p class="vn">
-            Sau nhiều năm chứng kiến thế giới ngày càng bất ổn — lạm phát, chiến tranh, hậu COVID, AI thay đổi tất cả — tôi nhận ra: <strong>trong hỗn loạn có khoảng trống. Và khoảng trống là nơi của những người xây dựng.</strong> Đã đến lúc xây điều của mình.
-          </p>
-          <div class="story-tags">
-            <span class="tag en">🏡 Rural roots</span>
-            <span class="tag vn">🏡 Gốc rễ miền quê</span>
-            <span class="tag en">🚢 Mekong Eyes</span>
-            <span class="tag vn">🚢 Mekong Eyes</span>
-            <span class="tag en">🌏 15 yrs Tourism</span>
-            <span class="tag vn">🌏 15 năm du lịch</span>
-            <span class="tag en">🧠 AI-Forward</span>
-            <span class="tag vn">🧠 Ứng dụng AI</span>
+        <!-- ─ Tài Pham ─────────────────────────────── -->
+        <div class="founder-card card-tai fi">
+          <div class="founder-card-header">
+            <div class="fc-avatar fc-avatar-tai">TP</div>
+            <div class="fc-id">
+              <div class="fc-name">Phạm Tấn Tài</div>
+              <div class="fc-title en">Co-founder · Director · Sales &amp; Systems · Long Xuyên</div>
+              <div class="fc-title vn">Đồng sáng lập · Giám đốc · Sales &amp; Hệ thống · Long Xuyên</div>
+            </div>
           </div>
+
+          <p class="fc-story en">
+            Tài grew up in a poor rural area of An Giang province. He chose to study English teaching at university — not his dream, but the practical path. After graduating, he took a job on a Mekong river cruise ship, where he discovered his love for hospitality and people. He moved to Saigon, worked his way up through 15 years in luxury tourism — from guide to Director — serving high-net-worth clients from the USA, Australia, France, UK, and Germany. He then built an AI-powered CRM from scratch for The Ant Adventures, and decided it was time to build something of his own.
+          </p>
+          <p class="fc-story vn">
+            Tài lớn lên ở vùng quê nghèo tỉnh An Giang. Anh chọn học ngành sư phạm tiếng Anh — không phải đam mê, mà vì thiết thực. Ra trường, anh làm việc trên du thuyền Mekong và tìm thấy tình yêu với ngành khách sạn và con người. Lên Sài Gòn, 15 năm vươn mình từ HDV lên Giám đốc — phục vụ khách hàng UHNW từ Mỹ, Úc, Pháp, Anh, Đức. Sau đó anh tự xây hệ thống CRM tích hợp AI cho The Ant Adventures, và quyết định đã đến lúc xây dựng điều gì đó thật sự là của mình.
+          </p>
+
+          <div class="fc-milestones">
+            <span class="milestone milestone-green">🏆 <span class="en">15 yrs luxury tourism</span><span class="vn">15 năm du lịch luxury</span></span>
+            <span class="milestone milestone-green">🤖 <span class="en">Built AI-powered CRM</span><span class="vn">Tự xây CRM tích hợp AI</span></span>
+            <span class="milestone milestone-green">🌍 <span class="en">USA / AU / FR / UK markets</span><span class="vn">Thị trường Mỹ/Úc/Pháp/Anh</span></span>
+          </div>
+
+          <blockquote class="fc-quote q-green en">
+            "Small step by step will lead to success. Stay calm, solve the problem first. Show the team — and they will lead themselves."
+          </blockquote>
+          <blockquote class="fc-quote q-green vn">
+            "Từng bước nhỏ sẽ dẫn đến thành công. Bình tĩnh, giải quyết vấn đề trước. Làm gương cho đội nhóm — và họ sẽ tự dẫn dắt chính mình."
+          </blockquote>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ── VENTURES ────────────────────────────────────────── -->
+  <!-- ══ VENTURES ════════════════════════════════════════ -->
   <section class="ventures-section" id="ventures">
     <div class="container">
-      <div class="section-label en fade-in">The 3 Ventures</div>
-      <div class="section-label vn fade-in">3 Dự Án</div>
-      <h2 class="fade-in en">Three ventures. <em>One ecosystem.</em></h2>
-      <h2 class="fade-in vn">Ba ventures. <em>Một hệ sinh thái.</em></h2>
-      <p class="lead fade-in en">
-        Each venture is distinct — but connected by a single belief: that business should create genuine value for people, community, and the environment.
+
+      <div class="section-tag fi en">What We're Building</div>
+      <div class="section-tag fi vn">Chúng Tôi Đang Xây</div>
+      <h2 class="fi en">Three ventures. <em>One ecosystem.</em></h2>
+      <h2 class="fi vn">Ba ventures. <em>Một hệ sinh thái.</em></h2>
+      <p class="lead fi en">
+        Each venture is distinct — but all connected by a single belief: that business should create genuine value for people, community, and the environment.
       </p>
-      <p class="lead fade-in vn">
-        Mỗi venture khác nhau — nhưng kết nối bởi một niềm tin: kinh doanh phải tạo ra giá trị thật sự cho con người, cộng đồng và môi trường.
+      <p class="lead fi vn">
+        Mỗi venture khác nhau — nhưng đều kết nối bởi một niềm tin: kinh doanh phải tạo ra giá trị thật sự cho con người, cộng đồng và môi trường.
       </p>
 
       <div class="ventures-grid">
 
-        <!-- Ant Adventures -->
-        <div class="venture-card fade-in">
-          <div class="venture-header">
-            <span class="venture-icon">🐜</span>
-            <div class="venture-name">The Ant Adventures</div>
-            <div class="venture-type en">Luxury Inbound Tourism · Vietnam</div>
-            <div class="venture-type vn">Du lịch Luxury Inbound · Việt Nam</div>
-            <div class="venture-stage en">Early Growth</div>
-            <div class="venture-stage vn">Tăng trưởng sớm</div>
+        <!-- The Ant Adventures -->
+        <div class="vc fi">
+          <div class="vc-head">
+            <div class="vc-icon">🐜</div>
+            <div class="vc-name">The Ant Adventures</div>
+            <div class="vc-type en">Luxury Inbound Tourism · Vietnam</div>
+            <div class="vc-type vn">Du lịch Luxury Inbound · Việt Nam</div>
+            <span class="vc-stage stage-green en">Early Growth</span>
+            <span class="vc-stage stage-green vn">Tăng trưởng sớm</span>
           </div>
-          <div class="venture-body">
-            <p class="venture-desc en">
+          <div class="vc-body">
+            <p class="vc-desc en">
               Boutique tour operator serving high-net-worth international travellers from the USA, Australia, France, UK, and Germany. Every journey is handcrafted — no templates, no mass tourism. We move like ants: small, deliberate, deeply connected to the ground beneath our feet.
             </p>
-            <p class="venture-desc vn">
-              Công ty tour boutique phục vụ du khách quốc tế cao cấp từ Mỹ, Úc, Pháp, Anh, Đức. Mỗi hành trình được thiết kế riêng — không template, không du lịch đại trà. Chúng tôi di chuyển như loài kiến: nhỏ, chủ đích, gắn kết sâu với mảnh đất bên dưới.
+            <p class="vc-desc vn">
+              Công ty tour boutique phục vụ du khách quốc tế cao cấp. Mỗi hành trình được thiết kế riêng — không template, không đại trà. Chúng tôi di chuyển như loài kiến: nhỏ, chủ đích, gắn kết sâu với mảnh đất dưới chân.
             </p>
-            <div class="venture-vision">
-              <div class="venture-vision-label en">10-Year Vision</div>
-              <div class="venture-vision-label vn">Tầm nhìn 10 năm</div>
-              <div class="venture-vision-text en">$10M revenue · 50 staff · Full Indochina</div>
-              <div class="venture-vision-text vn">$10M doanh thu · 50 nhân viên · Toàn Đông Dương</div>
+            <div class="vc-vision-box">
+              <div class="vc-vision-label en">10-Year Vision</div>
+              <div class="vc-vision-label vn">Tầm nhìn 10 năm</div>
+              <div class="vc-vision-text en">$10M revenue · 50 staff · Full Indochina</div>
+              <div class="vc-vision-text vn">$10M doanh thu · 50 nhân viên · Toàn Đông Dương</div>
             </div>
-            <div class="venture-roles">
-              <div class="venture-roles-label en">Open Roles</div>
-              <div class="venture-roles-label vn">Vị trí đang tìm</div>
-              <span class="role-pill en">Sales Executive</span>
-              <span class="role-pill en">Accountant</span>
-              <span class="role-pill en">Co-builder</span>
-              <span class="role-pill vn">Sales Executive</span>
-              <span class="role-pill vn">Kế Toán</span>
-              <span class="role-pill vn">Đồng hành xây dựng</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CRM -->
-        <div class="venture-card fade-in">
-          <div class="venture-header">
-            <span class="venture-icon">💻</span>
-            <div class="venture-name">CRM for Tourism</div>
-            <div class="venture-type en">SaaS · Vietnam Travel Industry</div>
-            <div class="venture-type vn">SaaS · Ngành Du Lịch Việt Nam</div>
-            <div class="venture-stage en">Product Live</div>
-            <div class="venture-stage vn">Sản phẩm đang chạy</div>
-          </div>
-          <div class="venture-body">
-            <p class="venture-desc en">
-              I built this for myself first. Most small and mid-size tour operators in Vietnam have no tech team — they're still doing everything manually: designing tours, finding clients, managing bookings on Excel and Zalo. I lived that problem. So I built the solution. Then I realised: hundreds of other businesses need this too.
-            </p>
-            <p class="venture-desc vn">
-              Tôi xây cái này cho chính mình trước. Hầu hết công ty du lịch nhỏ và vừa tại Việt Nam không có đội ngũ tech — họ vẫn làm mọi thứ manual: thiết kế tour, tìm khách, quản lý đặt phòng trên Excel và Zalo. Tôi sống vấn đề đó. Tôi tự xây giải pháp. Rồi nhận ra: hàng trăm doanh nghiệp khác cũng cần.
-            </p>
-            <div class="venture-vision">
-              <div class="venture-vision-label en">All-in-one for Tour Operators</div>
-              <div class="venture-vision-label vn">All-in-one cho công ty du lịch</div>
-              <div class="venture-vision-text en">Sales pipeline · AI tour design · Booking · Finance · HR — one system</div>
-              <div class="venture-vision-text vn">Pipeline bán hàng · Thiết kế tour AI · Đặt phòng · Tài chính · Nhân sự — một hệ thống</div>
-            </div>
-            <div class="venture-roles">
-              <div class="venture-roles-label en">Open Roles</div>
-              <div class="venture-roles-label vn">Vị trí đang tìm</div>
-              <span class="role-pill en">SaaS Sales / BD</span>
-              <span class="role-pill en">Tech Co-founder</span>
-              <span class="role-pill vn">SaaS Sales / BD</span>
-              <span class="role-pill vn">Đồng Sáng Lập KT</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tho Ca Phe -->
-        <div class="venture-card fade-in">
-          <div class="venture-header">
-            <span class="venture-icon">☕</span>
-            <div class="venture-name">Thở Cà Phê</div>
-            <div class="venture-type en">F&B · Mindful Coffee · Long Xuyên</div>
-            <div class="venture-type vn">F&B · Cà Phê Chánh Niệm · Long Xuyên</div>
-            <div class="venture-stage en">Raising 2026</div>
-            <div class="venture-stage vn">Kêu gọi đầu tư 2026</div>
-          </div>
-          <div class="venture-body">
-            <p class="venture-desc en">
-              <em>pause. breathe. taste.</em> — Thở is more than a coffee shop. It is a community space where Long Xuyên slows down, connects, and grows together. Six curated coffee experiences across Vietnam's three native varieties — plus regular workshops that bring real value to people: knowledge sharing, mindfulness, art, culture.
-            </p>
-            <p class="venture-desc vn">
-              <em>pause. breathe. taste.</em> — Thở không chỉ là quán cà phê. Đây là không gian cộng đồng nơi Long Xuyên dừng lại, kết nối, và cùng phát triển. Sáu trải nghiệm cà phê tinh tuyển từ ba giống cà phê Việt Nam — cùng các workshop thường xuyên mang lại giá trị thật cho cộng đồng: chia sẻ kiến thức, chánh niệm, nghệ thuật, văn hóa.
-            </p>
-            <!-- 6 Coffee Experiences -->
-            <div class="venture-tho-coffees">
-              <div class="tho-coffee">
-                <span>☕</span>
-                <strong>Phin Robusta</strong>
-                <small class="en">Bold · Traditional</small>
-                <small class="vn">Đậm · Truyền thống</small>
+            <div class="vc-vision-box" style="background:var(--green-light);">
+              <div class="vc-vision-label en">Website</div>
+              <div class="vc-vision-label vn">Website</div>
+              <div class="vc-vision-text">
+                <a href="https://theantadventures.com/" target="_blank" style="color:var(--green);">theantadventures.com ↗</a>
               </div>
-              <div class="tho-coffee">
+            </div>
+          </div>
+        </div>
+
+        <!-- CRM for Tourism -->
+        <div class="vc fi">
+          <div class="vc-head">
+            <div class="vc-icon">💻</div>
+            <div class="vc-name">CRM for Tourism</div>
+            <div class="vc-type en">SaaS · Vietnam Travel Industry</div>
+            <div class="vc-type vn">SaaS · Ngành Du Lịch Việt Nam</div>
+            <span class="vc-stage stage-amber en">Product Live</span>
+            <span class="vc-stage stage-amber vn">Sản phẩm đang chạy</span>
+          </div>
+          <div class="vc-body">
+            <p class="vc-desc en">
+              We built this for ourselves first — because most small tour operators in Vietnam are still running on Excel and Zalo, doing everything manually. We lived that problem and built the solution. Now hundreds of other businesses need it too. An all-in-one platform: tour design, sales, operations, finance, and AI co-pilot.
+            </p>
+            <p class="vc-desc vn">
+              Chúng tôi xây cái này cho chính mình trước — vì hầu hết công ty du lịch nhỏ vẫn dùng Excel và Zalo, làm thủ công tất cả. Chúng tôi sống vấn đề đó và tự xây giải pháp. Giờ hàng trăm doanh nghiệp khác cũng cần. Một nền tảng all-in-one: thiết kế tour, bán hàng, vận hành, tài chính và AI co-pilot.
+            </p>
+            <div class="vc-vision-box amber-box">
+              <div class="vc-vision-label en">Demo Available</div>
+              <div class="vc-vision-label vn">Xem demo ngay</div>
+              <div class="vc-vision-text">
+                <a href="https://theantadventurescrm.github.io/theantadventuresCRM/" target="_blank" style="color:var(--amber);">
+                  theantadventurescrm.github.io ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thở Cà Phê -->
+        <div class="vc fi">
+          <div class="vc-head">
+            <div class="vc-icon">☕</div>
+            <div class="vc-name">Thở Cà Phê</div>
+            <div class="vc-type en">Specialty Coffee · Long Xuyên, An Giang</div>
+            <div class="vc-type vn">Cà phê Specialty · Long Xuyên, An Giang</div>
+            <span class="vc-stage stage-coffee en">Brand Building</span>
+            <span class="vc-stage stage-coffee vn">Đang xây thương hiệu</span>
+          </div>
+          <div class="vc-body">
+            <p class="vc-desc en">
+              "Thở" means breathe. This is a mindful coffee brand — the first specialty coffee concept in the Mekong Delta, where 17 million people live and no brand like this yet exists. Not just coffee. A philosophy of slow living: pause, breathe, taste.
+            </p>
+            <p class="vc-desc vn">
+              "Thở" có nghĩa là hít thở. Đây là thương hiệu cà phê mindful — concept cà phê specialty đầu tiên tại Đồng Bằng Sông Cửu Long, nơi 17 triệu người sinh sống và chưa có thương hiệu nào như thế này. Không chỉ là cà phê. Đây là triết lý sống chậm: dừng lại, thở, thưởng thức.
+            </p>
+            <!-- 3 coffee types -->
+            <div class="tho-coffees">
+              <div class="tho-item">
+                <span>🌿</span>
+                <strong>ROBUSTA</strong>
+                <small class="en">Bold · Earthy</small>
+                <small class="vn">Đậm · Đất</small>
+              </div>
+              <div class="tho-item">
                 <span>🌸</span>
-                <strong>Arabica Pour-Over</strong>
+                <strong>ARABICA</strong>
                 <small class="en">Bright · Floral</small>
-                <small class="vn">Tươi Sáng · Hoa</small>
+                <small class="vn">Tươi · Hoa</small>
               </div>
-              <div class="tho-coffee">
+              <div class="tho-item">
                 <span>🍂</span>
-                <strong>Liberica Rare</strong>
-                <small class="en">Smoky · Heritage</small>
-                <small class="vn">Khói · Di sản</small>
-              </div>
-              <div class="tho-coffee">
-                <span>🧊</span>
-                <strong>Cà Phê Sữa Đá</strong>
-                <small class="en">Iced · Signature VN</small>
-                <small class="vn">Đặc trưng Việt Nam</small>
-              </div>
-              <div class="tho-coffee">
-                <span>🌙</span>
-                <strong>Cold Brew</strong>
-                <small class="en">Slow · Smooth</small>
-                <small class="vn">Ủ chậm · Mượt mà</small>
-              </div>
-              <div class="tho-coffee">
-                <span>✨</span>
-                <strong>Seasonal Blend</strong>
-                <small class="en">Rotating · Curated</small>
-                <small class="vn">Theo mùa · Tinh tuyển</small>
+                <strong>LIBERICA</strong>
+                <small class="en">Rare · Smoky</small>
+                <small class="vn">Hiếm · Khói</small>
               </div>
             </div>
-
-            <!-- Workshops & Community -->
-            <div class="tho-workshops">
-              <div class="tho-workshop-label en">☀ Community · Workshops · Value</div>
-              <div class="tho-workshop-label vn">☀ Cộng Đồng · Workshop · Giá Trị</div>
-              <div class="tho-workshop-items">
-                <div class="tho-workshop-item"><span>☕</span><span class="en">Coffee Cupping — origin stories, tasting rituals</span><span class="vn">Cupping Cà Phê — câu chuyện nguồn gốc, nghi thức thử vị</span></div>
-                <div class="tho-workshop-item"><span>🧘</span><span class="en">Mindfulness & Slow Living — breathe, journal, be present</span><span class="vn">Chánh Niệm & Sống Chậm — thở, viết nhật ký, hiện diện</span></div>
-                <div class="tho-workshop-item"><span>💡</span><span class="en">Knowledge Sharing — community talks, skill sessions</span><span class="vn">Chia Sẻ Kiến Thức — diễn giả, phát triển bản thân</span></div>
-                <div class="tho-workshop-item"><span>🎨</span><span class="en">Art & Mekong Culture — local artists, music, craft</span><span class="vn">Nghệ Thuật & Văn Hóa Mekong — nghệ sĩ, âm nhạc, thủ công</span></div>
+            <!-- Workshop panel -->
+            <div class="tho-workshop">
+              <div class="tho-ws-lbl en">Community &amp; Workshops</div>
+              <div class="tho-ws-lbl vn">Cộng đồng &amp; Workshop</div>
+              <div class="tho-ws-item"><span>🎨</span> <span class="en">Art &amp; creative sessions</span><span class="vn">Sáng tạo &amp; nghệ thuật</span></div>
+              <div class="tho-ws-item"><span>🧘</span> <span class="en">Mindfulness &amp; slow living</span><span class="vn">Mindfulness &amp; sống chậm</span></div>
+              <div class="tho-ws-item"><span>☕</span> <span class="en">Coffee tasting &amp; origin stories</span><span class="vn">Cà phê tasting &amp; nguồn gốc</span></div>
+            </div>
+            <div class="vc-vision-box coffee-box">
+              <div class="vc-vision-label en">Project Page</div>
+              <div class="vc-vision-label vn">Trang dự án</div>
+              <div class="vc-vision-text">
+                <a href="https://theantadventurescrm.github.io/Thoproject2026/" target="_blank" style="color:var(--coffee);">Thoproject2026 ↗</a>
               </div>
-            </div>
-            <div class="venture-vision">
-              <div class="venture-vision-label en">Not just a café — a community hub</div>
-              <div class="venture-vision-label vn">Không chỉ là quán — một trung tâm cộng đồng</div>
-              <div class="venture-vision-text en">17M people · 0 mindful brands · Long Xuyên → ĐBSCL → Vietnam national brand</div>
-              <div class="venture-vision-text vn">17 triệu người · 0 thương hiệu mindful · Long Xuyên → ĐBSCL → thương hiệu quốc gia</div>
-            </div>
-            <div class="venture-roles">
-              <div class="venture-roles-label en">Open Roles</div>
-              <div class="venture-roles-label vn">Vị trí đang tìm</div>
-              <span class="role-pill en">Brand Builder</span>
-              <span class="role-pill en">F&B Operator</span>
-              <span class="role-pill en">Community Builder</span>
-              <span class="role-pill vn">Xây dựng thương hiệu</span>
-              <span class="role-pill vn">Vận hành F&B</span>
-              <span class="role-pill vn">Xây dựng cộng đồng</span>
             </div>
           </div>
         </div>
@@ -891,323 +881,239 @@
     </div>
   </section>
 
-  <!-- ── PHILOSOPHY ─────────────────────────────────────── -->
-  <section class="philosophy-section">
+  <!-- ══ WHAT WE BELIEVE ════════════════════════════════ -->
+  <section class="values-section" id="values">
     <div class="container">
-      <div class="philosophy-grid">
 
-        <div class="fade-in">
-          <div class="section-label en">Leadership Philosophy</div>
-          <div class="section-label vn">Triết Lý Lãnh Đạo</div>
-          <h2 class="en">I lead by <em>example</em>,<br/>not instruction.</h2>
-          <h2 class="vn">Tôi lãnh đạo bằng<br/><em>hành động</em>, không phải lời nói.</h2>
-          <div class="philosophy-quote en">
-            "I will show you — not just tell you. I stay calm when things go wrong. I believe in small, consistent steps. And I believe that when I develop you, you will develop yourself."
-          </div>
-          <div class="philosophy-quote vn">
-            "Tôi sẽ làm gương — không chỉ nói. Tôi bình tĩnh khi mọi thứ đi sai. Tôi tin vào những bước nhỏ kiên định. Và tôi tin rằng khi tôi phát triển bạn, bạn sẽ tự phát triển chính mình."
-          </div>
-          <div class="philosophy-author">— Tai Pham</div>
+      <div class="section-tag fi en">What We Believe</div>
+      <div class="section-tag fi vn">Những Điều Chúng Tôi Tin</div>
+      <h2 class="fi en">How we lead. <em>How we build.</em></h2>
+      <h2 class="fi vn">Cách chúng tôi dẫn dắt. <em>Cách chúng tôi xây.</em></h2>
+
+      <div class="values-grid">
+
+        <div class="value-card fi">
+          <div class="value-icon">🐾</div>
+          <div class="value-title en">Small step by step</div>
+          <div class="value-title vn">Từng bước nhỏ</div>
+          <p class="value-desc en">Big visions are built through consistent, deliberate small actions. We don't rush. We don't skip steps. We compound.</p>
+          <p class="value-desc vn">Tầm nhìn lớn được xây từ những hành động nhỏ, có chủ đích, nhất quán. Chúng tôi không vội vàng, không bỏ qua bước nào.</p>
         </div>
 
-        <div class="principles fade-in">
-          <div class="principle">
-            <div class="principle-icon">🪴</div>
-            <div class="principle-text">
-              <strong class="en">Small Step by Step</strong>
-              <strong class="vn">Từng Bước Nhỏ</strong>
-              <span class="en">Consistent, deliberate action over long periods beats any shortcut. I believe in compounding effort.</span>
-              <span class="vn">Hành động nhất quán, có chủ đích trong thời gian dài sẽ thắng mọi lối tắt. Tôi tin vào sức mạnh tích lũy.</span>
-            </div>
-          </div>
-          <div class="principle">
-            <div class="principle-icon">🧘</div>
-            <div class="principle-text">
-              <strong class="en">Calm Under Pressure</strong>
-              <strong class="vn">Bình Tĩnh Dưới Áp Lực</strong>
-              <span class="en">Solve the problem first, feel the emotion later. A calm leader gives the team room to think clearly.</span>
-              <span class="vn">Giải quyết vấn đề trước, cảm xúc sau. Người lãnh đạo bình tĩnh cho đội nhóm không gian để suy nghĩ rõ ràng.</span>
-            </div>
-          </div>
-          <div class="principle">
-            <div class="principle-icon">🌱</div>
-            <div class="principle-text">
-              <strong class="en">Develop People to Lead Themselves</strong>
-              <strong class="vn">Phát Triển Người Để Họ Tự Lãnh Đạo</strong>
-              <span class="en">My goal is not to be needed. My goal is to grow people who grow themselves — and then grow others.</span>
-              <span class="vn">Mục tiêu của tôi không phải là được cần. Mà là phát triển những người tự phát triển — rồi phát triển người khác.</span>
-            </div>
-          </div>
-          <div class="principle">
-            <div class="principle-icon">👥</div>
-            <div class="principle-text">
-              <strong class="en">People Are the Core Value</strong>
-              <strong class="vn">Con Người Là Giá Trị Cốt Lõi</strong>
-              <span class="en">Find the right person. Put them in the right position. Then step back and let their talent shine. I don't manage people — I create conditions for them to lead themselves.</span>
-              <span class="vn">Tìm đúng người. Đặt vào đúng vị trí. Rồi bước lui và để tài năng của họ tỏa sáng. Tôi không quản lý con người — tôi tạo điều kiện để họ tự lãnh đạo chính mình.</span>
-            </div>
-          </div>
-          <div class="principle">
-            <div class="principle-icon">🌏</div>
-            <div class="principle-text">
-              <strong class="en">Value for Community &amp; Environment</strong>
-              <strong class="vn">Giá Trị Cho Cộng Đồng &amp; Môi Trường</strong>
-              <span class="en">Profit is a result, not the mission. The mission is to create something genuinely meaningful for people around us.</span>
-              <span class="vn">Lợi nhuận là kết quả, không phải sứ mệnh. Sứ mệnh là tạo ra điều có ý nghĩa thật sự cho những người xung quanh.</span>
-            </div>
-          </div>
+        <div class="value-card fi">
+          <div class="value-icon">🧘</div>
+          <div class="value-title en">Calm under pressure</div>
+          <div class="value-title vn">Bình tĩnh dưới áp lực</div>
+          <p class="value-desc en">When things go wrong — and in startups, they do — we don't panic. We solve the problem first. We breathe.</p>
+          <p class="value-desc vn">Khi mọi thứ đổ vỡ — và trong startup, điều đó xảy ra — chúng tôi không hoảng loạn. Chúng tôi giải quyết vấn đề trước. Chúng tôi hít thở.</p>
+        </div>
+
+        <div class="value-card fi">
+          <div class="value-icon">🌱</div>
+          <div class="value-title en">People are the core value</div>
+          <div class="value-title vn">Con người là giá trị cốt lõi</div>
+          <p class="value-desc en">Not revenue. Not growth metrics. The right people, in the right roles, allowed to grow — that is the real foundation.</p>
+          <p class="value-desc vn">Không phải doanh thu, không phải tăng trưởng. Con người đúng chỗ, được phát huy — đó mới là nền tảng thật sự.</p>
+        </div>
+
+        <div class="value-card fi">
+          <div class="value-icon">🤝</div>
+          <div class="value-title en">Lead by showing, not telling</div>
+          <div class="value-title vn">Lãnh đạo bằng hành động</div>
+          <p class="value-desc en">Show the team what's possible. When they see it, they run on their own. We build leaders — not followers.</p>
+          <p class="value-desc vn">Làm gương cho đội nhóm thấy điều gì là có thể. Khi họ thấy được, họ tự chạy. Chúng tôi xây lãnh đạo — không phải người đi theo.</p>
+        </div>
+
+        <div class="value-card fi">
+          <div class="value-icon">🌍</div>
+          <div class="value-title en">Build for community</div>
+          <div class="value-title vn">Xây dựng vì cộng đồng</div>
+          <p class="value-desc en">Profit is a result, not the purpose. Everything we build should leave something good behind — for people and the environment.</p>
+          <p class="value-desc vn">Lợi nhuận là kết quả, không phải mục đích. Mọi thứ chúng tôi xây phải để lại điều gì đó tốt đẹp — cho con người và môi trường.</p>
+        </div>
+
+        <div class="value-card fi">
+          <div class="value-icon">⚡</div>
+          <div class="value-title en">Build in the chaos</div>
+          <div class="value-title vn">Xây trong hỗn loạn</div>
+          <p class="value-desc en">Inflation, AI disruption, post-COVID instability — we don't wait for the perfect time. We adapt, we move, we build now.</p>
+          <p class="value-desc vn">Lạm phát, AI thay đổi, bất ổn hậu COVID — chúng tôi không chờ thời điểm hoàn hảo. Chúng tôi thích nghi, tiến lên và xây ngay bây giờ.</p>
         </div>
 
       </div>
+
     </div>
   </section>
 
-  <!-- ── FIT ─────────────────────────────────────────────── -->
-  <section class="fit-section">
+  <!-- ══ WHO FITS ════════════════════════════════════════ -->
+  <section class="fit-section" id="fit">
     <div class="container">
-      <div class="section-label en fade-in">Culture Fit</div>
-      <div class="section-label vn fade-in">Phù Hợp Văn Hóa</div>
-      <h2 class="fade-in en">This might be <em>your place</em>.<br/>Or it might not.</h2>
-      <h2 class="fade-in vn">Đây có thể là <em>nơi của bạn</em>.<br/>Hoặc có thể không.</h2>
-      <p class="lead fade-in en">I don't just hire skills. I look for people. Here's who will thrive here — and who won't.</p>
-      <p class="lead fade-in vn">Tôi không chỉ tuyển kỹ năng. Tôi tìm con người. Đây là ai sẽ phát triển mạnh — và ai thì không.</p>
+
+      <div class="section-tag fi en">Is this for you?</div>
+      <div class="section-tag fi vn">Đây có phải là dành cho bạn?</div>
+      <h2 class="fi en">We're not for <em>everyone.</em></h2>
+      <h2 class="fi vn">Chúng tôi không dành cho <em>tất cả mọi người.</em></h2>
+      <p class="lead fi en">
+        We're building something real, from scratch, with limited resources and unlimited ambition. That kind of environment is energising for some people — and deeply uncomfortable for others. Both are valid. Know which you are.
+      </p>
+      <p class="lead fi vn">
+        Chúng tôi đang xây điều thật sự, từ đầu, với nguồn lực hạn chế và tham vọng không giới hạn. Môi trường đó sẽ truyền năng lượng cho một số người — và gây khó chịu sâu sắc cho những người khác. Cả hai đều bình thường. Hãy biết mình thuộc nhóm nào.
+      </p>
 
       <div class="fit-grid">
-        <div class="fit-card yes fade-in">
-          <div class="fit-title">
-            <div class="fit-icon">✓</div>
-            <span class="en">You'll thrive here</span>
-            <span class="vn">Bạn sẽ phát triển</span>
+
+        <!-- YES column -->
+        <div class="fit-col fi">
+          <div class="fit-col-head yes-head">
+            <div class="fit-icon">✅</div>
+            <div class="fit-col-title en">You might belong here if…</div>
+            <div class="fit-col-title vn">Bạn có thể thuộc về đây nếu…</div>
           </div>
-          <div class="fit-item">
-            <div class="fit-dot">✓</div>
-            <div class="fit-item-text">
-              <strong class="en">Self-disciplined</strong>
-              <strong class="vn">Kỷ luật bản thân</strong>
-              <span class="en">You manage your own time and hit deadlines without being chased</span>
-              <span class="vn">Tự quản lý thời gian, hoàn thành deadline mà không cần nhắc nhở</span>
+          <div class="fit-items">
+            <div class="fit-item">
+              <div class="fit-dot yes">✓</div>
+              <span class="en">You manage your own time and hit deadlines without being chased.</span>
+              <span class="vn">Bạn tự quản lý thời gian và hoàn thành đúng hạn mà không cần ai nhắc.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✓</div>
-            <div class="fit-item-text">
-              <strong class="en">Positive attitude</strong>
-              <strong class="vn">Thái độ tích cực</strong>
-              <span class="en">You bring energy to the room and see solutions before problems</span>
-              <span class="vn">Mang năng lượng, nhìn thấy giải pháp trước vấn đề</span>
+            <div class="fit-item">
+              <div class="fit-dot yes">✓</div>
+              <span class="en">You see problems as puzzles to solve, not reasons to complain.</span>
+              <span class="vn">Bạn xem vấn đề là câu đố cần giải, không phải lý do để phàn nàn.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✓</div>
-            <div class="fit-item-text">
-              <strong class="en">Growth mindset</strong>
-              <strong class="vn">Ham học hỏi</strong>
-              <span class="en">You learn fast, welcome feedback, and improve constantly</span>
-              <span class="vn">Học nhanh, đón nhận phản hồi, cải thiện liên tục</span>
+            <div class="fit-item">
+              <div class="fit-dot yes">✓</div>
+              <span class="en">You're comfortable with ambiguity and can build without a perfect roadmap.</span>
+              <span class="vn">Bạn thoải mái với sự mơ hồ và có thể xây dựng mà không cần lộ trình hoàn hảo.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✓</div>
-            <div class="fit-item-text">
-              <strong class="en">Mission-aligned</strong>
-              <strong class="vn">Đồng điệu với sứ mệnh</strong>
-              <span class="en">You genuinely care about building something meaningful</span>
-              <span class="vn">Thật sự quan tâm đến việc xây dựng điều có ý nghĩa</span>
+            <div class="fit-item">
+              <div class="fit-dot yes">✓</div>
+              <span class="en">You care about the mission — not just the salary.</span>
+              <span class="vn">Bạn quan tâm đến sứ mệnh — không chỉ là mức lương.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✓</div>
-            <div class="fit-item-text">
-              <strong class="en">Long-term thinker</strong>
-              <strong class="vn">Tư duy dài hạn</strong>
-              <span class="en">You think in years and want to build equity, not just earn a salary</span>
-              <span class="vn">Tư duy theo năm, muốn xây dựng giá trị lâu dài, không chỉ nhận lương</span>
+            <div class="fit-item">
+              <div class="fit-dot yes">✓</div>
+              <span class="en">You want to grow — and you welcome honest feedback.</span>
+              <span class="vn">Bạn muốn phát triển — và bạn đón nhận phản hồi thẳng thắn.</span>
             </div>
           </div>
         </div>
 
-        <div class="fit-card no fade-in">
-          <div class="fit-title">
-            <div class="fit-icon">✕</div>
-            <span class="en">This won't work</span>
-            <span class="vn">Điều này sẽ không phù hợp</span>
+        <!-- NO column -->
+        <div class="fit-col fi">
+          <div class="fit-col-head no-head">
+            <div class="fit-icon">🚫</div>
+            <div class="fit-col-title en">This probably isn't for you if…</div>
+            <div class="fit-col-title vn">Đây có thể không phù hợp nếu…</div>
           </div>
-          <div class="fit-item">
-            <div class="fit-dot">✕</div>
-            <div class="fit-item-text">
-              <strong class="en">You complain without solutions</strong>
-              <strong class="vn">Hay phàn nàn mà không có giải pháp</strong>
-              <span class="en">We solve problems here. Complaints without proposals drain the whole team.</span>
-              <span class="vn">Chúng tôi giải quyết vấn đề. Phàn nàn không có đề xuất sẽ kéo cả đội xuống.</span>
+          <div class="fit-items">
+            <div class="fit-item">
+              <div class="fit-dot no">✕</div>
+              <span class="en">You need constant supervision and hand-holding to make decisions.</span>
+              <span class="vn">Bạn cần được giám sát liên tục và hỗ trợ từng bước để ra quyết định.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✕</div>
-            <div class="fit-item-text">
-              <strong class="en">You need constant direction</strong>
-              <strong class="vn">Cần được chỉ đường từng bước</strong>
-              <span class="en">We're building from scratch. You need to own your lane and navigate it.</span>
-              <span class="vn">Chúng tôi đang xây từ đầu. Bạn cần tự chủ với phần việc của mình.</span>
+            <div class="fit-item">
+              <div class="fit-dot no">✕</div>
+              <span class="en">You're here primarily for a stable salary, not to build something.</span>
+              <span class="vn">Bạn đến đây chủ yếu vì mức lương ổn định, không phải để xây dựng.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✕</div>
-            <div class="fit-item-text">
-              <strong class="en">Salary is your only motivation</strong>
-              <strong class="vn">Lương là động lực duy nhất</strong>
-              <span class="en">This is a startup. The real reward is building something that lasts.</span>
-              <span class="vn">Đây là startup. Phần thưởng thật sự là xây điều gì đó tồn tại lâu dài.</span>
+            <div class="fit-item">
+              <div class="fit-dot no">✕</div>
+              <span class="en">Uncertainty and change make you anxious rather than curious.</span>
+              <span class="vn">Sự không chắc chắn và thay đổi khiến bạn lo lắng hơn là tò mò.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✕</div>
-            <div class="fit-item-text">
-              <strong class="en">You can't handle uncertainty</strong>
-              <strong class="vn">Không chịu được sự bất định</strong>
-              <span class="en">Startup life is not a corporate job. Some days are clear. Many days are not.</span>
-              <span class="vn">Startup không phải công việc tập đoàn. Có ngày rõ ràng. Nhiều ngày thì không.</span>
+            <div class="fit-item">
+              <div class="fit-dot no">✕</div>
+              <span class="en">You prefer to wait for instructions rather than taking initiative.</span>
+              <span class="vn">Bạn thích chờ hướng dẫn hơn là chủ động hành động.</span>
             </div>
-          </div>
-          <div class="fit-item">
-            <div class="fit-dot">✕</div>
-            <div class="fit-item-text">
-              <strong class="en">Negative energy</strong>
-              <strong class="vn">Năng lượng tiêu cực</strong>
-              <span class="en">We're building with enthusiasm and care. That culture must be protected.</span>
-              <span class="vn">Chúng tôi xây dựng với nhiệt huyết và sự tận tâm. Văn hóa đó phải được bảo vệ.</span>
+            <div class="fit-item">
+              <div class="fit-dot no">✕</div>
+              <span class="en">You bring problems to the team — but not solutions along with them.</span>
+              <span class="vn">Bạn mang vấn đề đến với đội nhóm — nhưng không có giải pháp đi kèm.</span>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ── OPEN ROLES ─────────────────────────────────────── -->
-  <section class="roles-section" id="roles">
-    <div class="container">
-      <div class="section-label en fade-in">Open Roles</div>
-      <div class="section-label vn fade-in">Vị Trí Đang Tìm</div>
-      <h2 class="fade-in en">Where could <em>you</em> fit?</h2>
-      <h2 class="fade-in vn"><em>Bạn</em> phù hợp ở đâu?</h2>
-      <p class="lead fade-in en">These are not job descriptions — they're invitations. If any of these resonate, reach out and let's talk.</p>
-      <p class="lead fade-in vn">Đây không phải mô tả công việc — đây là lời mời. Nếu bất kỳ điều nào có tiếng vang, hãy liên hệ và nói chuyện.</p>
-
-      <div class="roles-grid">
-        <div class="role-card fade-in">
-          <span class="role-venture-tag ant">🐜 The Ant Adventures</span>
-          <div class="role-title en">Sales Executive</div>
-          <div class="role-title vn">Sales Executive</div>
-          <p class="role-desc en">You know the international travel market, speak excellent English, and are hungry to close. You'll be the bridge between our boutique experiences and agents worldwide.</p>
-          <p class="role-desc vn">Bạn hiểu thị trường du lịch quốc tế, nói tiếng Anh tốt, và khao khát chốt deals. Bạn sẽ là cầu nối giữa trải nghiệm boutique của chúng tôi và các đại lý toàn cầu.</p>
-        </div>
-        <div class="role-card fade-in">
-          <span class="role-venture-tag ant">🐜 The Ant Adventures</span>
-          <div class="role-title en">Accountant / Finance</div>
-          <div class="role-title vn">Kế Toán / Tài Chính</div>
-          <p class="role-desc en">Detail-oriented, trustworthy, and comfortable with multi-currency USD operations. You'll own our financial foundation as we scale.</p>
-          <p class="role-desc vn">Tỉ mỉ, đáng tin cậy, và quen với các hoạt động đa tiền tệ USD. Bạn sẽ nắm giữ nền tảng tài chính khi chúng tôi phát triển.</p>
-        </div>
-        <div class="role-card fade-in">
-          <span class="role-venture-tag ant">🐜 The Ant Adventures</span>
-          <div class="role-title en">Co-builder / Operations</div>
-          <div class="role-title vn">Đồng hành xây dựng / Vận hành</div>
-          <p class="role-desc en">You want to grow WITH the company from startup stage. Not just a salary — you want to build your own story here.</p>
-          <p class="role-desc vn">Bạn muốn phát triển CÙNG công ty từ giai đoạn startup. Không chỉ là lương — bạn muốn xây dựng câu chuyện của mình ở đây.</p>
-        </div>
-        <div class="role-card fade-in">
-          <span class="role-venture-tag crm">💻 CRM for Tourism</span>
-          <div class="role-title en">SaaS Sales / Business Development</div>
-          <div class="role-title vn">SaaS Sales / Business Development</div>
-          <p class="role-desc en">You understand Vietnam's travel industry and can sell software to tour companies. You open doors we haven't found yet.</p>
-          <p class="role-desc vn">Bạn hiểu ngành du lịch Việt Nam và có thể bán phần mềm cho các công ty tour. Bạn mở những cánh cửa chúng tôi chưa tìm thấy.</p>
-        </div>
-        <div class="role-card fade-in">
-          <span class="role-venture-tag crm">💻 CRM for Tourism</span>
-          <div class="role-title en">Tech Co-founder / Partner</div>
-          <div class="role-title vn">Đồng Sáng Lập Kỹ Thuật</div>
-          <p class="role-desc en">SaaS growth experience, ideally in Vietnam or Southeast Asia. You'll shape the product roadmap and own the technical vision.</p>
-          <p class="role-desc vn">Kinh nghiệm tăng trưởng SaaS, tốt nhất là tại Việt Nam hoặc Đông Nam Á. Bạn sẽ định hình roadmap sản phẩm và sở hữu tầm nhìn kỹ thuật.</p>
-        </div>
-        <div class="role-card fade-in">
-          <span class="role-venture-tag cafe">☕ Thở Cà Phê</span>
-          <div class="role-title en">Brand Builder / Creative Partner</div>
-          <div class="role-title vn">Xây dựng Thương Hiệu / Đối Tác Sáng Tạo</div>
-          <p class="role-desc en">You live the slow-living philosophy. You can build brand stories that become movements — not just marketing campaigns.</p>
-          <p class="role-desc vn">Bạn sống triết lý sống chậm. Bạn có thể xây dựng câu chuyện thương hiệu trở thành phong trào — không chỉ là chiến dịch marketing.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CTA ─────────────────────────────────────────────── -->
+  <!-- ══ CTA — JOIN THE JOURNEY ═════════════════════════ -->
   <section class="cta-section" id="contact">
-    <div class="container">
-      <div class="section-label en fade-in">Let's Talk</div>
-      <div class="section-label vn fade-in">Hãy Nói Chuyện</div>
-      <h2 class="fade-in en">Don't send a CV.<br/><em>Start a conversation.</em></h2>
-      <h2 class="fade-in vn">Đừng gửi CV.<br/><em>Hãy bắt đầu một cuộc trò chuyện.</em></h2>
-      <p class="cta-desc fade-in en">
-        If something on this page resonated — reach out. Tell me what you're building, what you believe in, and why you think we might be a fit. I want a real conversation, not a formal interview.
-      </p>
-      <p class="cta-desc fade-in vn">
-        Nếu điều gì đó trên trang này có tiếng vang — hãy liên hệ. Kể cho tôi nghe bạn đang xây dựng gì, bạn tin vào điều gì, và tại sao bạn nghĩ chúng ta có thể phù hợp. Tôi muốn một cuộc trò chuyện thật sự, không phải phỏng vấn hình thức.
-      </p>
-      <div class="cta-email-block fade-in">
-        <div>
-          <div class="cta-email-label en">Write to Tai directly</div>
-          <div class="cta-email-label vn">Viết thẳng cho Tài</div>
-          <div class="cta-email-addr">taipham@theantadventures.com</div>
-        </div>
+    <div class="cta-inner">
+
+      <div class="cta-label fi">
+        <span>✉</span>
+        <span class="en">Open to all roles — all ventures</span>
+        <span class="vn">Mở cho tất cả vị trí — tất cả ventures</span>
       </div>
-      <div class="cta-btns fade-in">
-        <a href="mailto:taipham@theantadventures.com?subject=I%20want%20to%20build%20with%20you" class="btn btn-cta-primary">
-          <span class="en">✉ Email Me Now</span>
-          <span class="vn">✉ Gửi Email Ngay</span>
+
+      <h2 class="cta-h fi en">
+        We're not posting job ads.<br>
+        We're looking for <em>the right people.</em>
+      </h2>
+      <h2 class="cta-h fi vn">
+        Chúng tôi không đăng tin tuyển dụng.<br>
+        Chúng tôi tìm <em>đúng người.</em>
+      </h2>
+
+      <p class="cta-sub fi en">
+        If you've read this far and something in you said "yes" — that's the signal. We don't care about perfect CVs. We care about people who are genuinely curious, self-driven, and want to build something that matters. Tell us about yourself. Tell us which venture excites you. Tell us why.
+      </p>
+      <p class="cta-sub fi vn">
+        Nếu bạn đọc đến đây và có điều gì đó trong bạn nói "có" — đó chính là tín hiệu. Chúng tôi không cần CV hoàn hảo. Chúng tôi cần người thật sự tò mò, tự chủ và muốn xây điều gì đó có ý nghĩa. Hãy kể về bạn. Hãy nói venture nào làm bạn hứng khởi. Và tại sao.
+      </p>
+
+      <div class="cta-duo fi">
+        <a href="mailto:taipham@theantadventures.com?subject=I want to build with you" class="btn btn-white">
+          <span class="en">✉ Email Tài</span>
+          <span class="vn">✉ Email Tài</span>
         </a>
-        <a href="https://theantadventures.com" target="_blank" class="btn btn-cta-outline">
-          <span class="en">🌏 Visit The Ant Adventures</span>
-          <span class="vn">🌏 Xem The Ant Adventures</span>
-        </a>
-        <a href="https://theantadventurescrm.github.io/theantadventuresCRM/" target="_blank" class="btn btn-cta-outline">
-          <span class="en">💻 See the CRM Demo</span>
-          <span class="vn">💻 Xem demo CRM</span>
+        <a href="mailto:taipham@theantadventures.com?subject=I want to build with you — Phuc&cc=vohoangphuc@theantadventures.com" class="btn btn-amber">
+          <span class="en">✉ Email Phúc</span>
+          <span class="vn">✉ Email Phúc</span>
         </a>
       </div>
+
+      <p class="cta-email-note fi en">
+        Write to us at <a href="mailto:taipham@theantadventures.com">taipham@theantadventures.com</a><br>
+        Tell us: who you are · which venture · what you bring · why now.
+      </p>
+      <p class="cta-email-note fi vn">
+        Gửi email tới <a href="mailto:taipham@theantadventures.com">taipham@theantadventures.com</a><br>
+        Hãy kể: bạn là ai · venture nào · bạn mang lại gì · tại sao là bây giờ.
+      </p>
+
     </div>
   </section>
 
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer>
-    <p>
-      <span class="en">© 2026 Tai Pham · <a href="https://theantadventures.com">The Ant Adventures</a> · Vietnam</span>
-      <span class="vn">© 2026 Phạm Văn Tài · <a href="https://theantadventures.com">The Ant Adventures</a> · Việt Nam</span>
-    </p>
+    <div class="footer-brand">
+      <span>🐜</span>
+      <span>The Ant Adventures © 2026</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://theantadventures.com" target="_blank">theantadventures.com</a>
+      <a href="https://theantadventurescrm.github.io/theantadventuresCRM/" target="_blank">CRM Demo</a>
+      <a href="mailto:taipham@theantadventures.com">Contact</a>
+    </div>
   </footer>
 
-  <!-- ── SCRIPT ─────────────────────────────────────────── -->
+  <!-- ══ SCRIPTS ═════════════════════════════════════════ -->
   <script>
-    // Language toggle
+    /* Language toggle */
     function setLang(lang) {
       document.body.classList.toggle('lang-vn', lang === 'vn');
       document.getElementById('btnEN').classList.toggle('active', lang === 'en');
       document.getElementById('btnVN').classList.toggle('active', lang === 'vn');
     }
 
-    // Scroll fade-in
+    /* Fade-in on scroll */
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          // Stagger siblings
-          const siblings = e.target.parentElement.querySelectorAll('.fade-in');
-          siblings.forEach((el, i) => {
-            setTimeout(() => el.classList.add('visible'), i * 100);
-          });
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fi').forEach(el => observer.observe(el));
   </script>
 
 </body>
